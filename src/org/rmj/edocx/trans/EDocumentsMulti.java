@@ -41,7 +41,12 @@ public class EDocumentsMulti {
    public Object loadTransaction(String string, String sourcecd) {
       UnitEDocumentsMulti loOcc = new UnitEDocumentsMulti();
       Connection loCon = poGRider.getConnection();
-
+      
+      
+    if(!EDocSysUtil.RSyncFile(poGRider, string)){
+        System.err.println("No Images Available");
+    }
+    
       //Load the master record
       loOcc.setMaster(loadMaster(loCon, string));
       
@@ -751,6 +756,7 @@ public class EDocumentsMulti {
                     ", sRemarksx = " + SQLUtil.toSQL(loOcc.getRemarksx()) +
                     ", nEntryNox = " + (Integer) loOcc.getEntryNox() +
                     ", cTranStat = " + SQLUtil.toSQL(loOcc.getTranStat()) +
+                    ", cSendStat = 0" + 
                     ", sModified = " + SQLUtil.toSQL(loOcc.getModifiedBy()) +
                     ", dModified = " + SQLUtil.toSQL(loOcc.getDateModified());                         
       } else {
